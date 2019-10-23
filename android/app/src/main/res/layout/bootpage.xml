@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.viewpager.widget.ViewPager
+    android:id="@+id/boot_vp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/viewpager_bg"/>
+    <ImageView
+        android:id="@+id/boot_point"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/point_1"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"/>
+</RelativeLayout>

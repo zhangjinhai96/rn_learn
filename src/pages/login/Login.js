@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableNativeFeedback ,NativeModules} from 'react-native';
 const device = Dimensions.get('window')
 const width = device.width
 export default class AppLogin extends Component {
@@ -16,26 +16,30 @@ export default class AppLogin extends Component {
 
     agree = () => { this.setState({ isAgree: !this.state.isAgree }) }
 
-    callBack=(name,gender,icon)=>{alert('还没有')}
+    callBack=(name,gender,icon)=>{alert(name)}
 
-    wxLogin=()=>{alert('等会儿')}
+    wxLogin=()=>{NativeModules.Login.wxLogin(this.callBack)}
 
-    qqLogin=()=>{this.callBack}
+    qqLogin=()=>{NativeModules.Login.qqLogin(this.callBack)}
 
-    sinaLogin=()=>{this.callBack}
+    sinaLogin=()=>{NativeModules.Login.sinaLogin(this.callBack)}
 
-    render() {
+    login=()=>{ alert('直接进首页')}
+    
+    register=()=>{  alert('跳到注册页') }
+
+    render(){
         let { ways } = this.state
         return (
             <View style={styles.loginAll}>
 
-                <Text style={styles.head}>注册</Text>
+                <Text style={styles.head} onPress={this.register}>注册</Text>
 
                 <View style={styles.logo_c}>
                     <Image source={require('./img/music.png')}></Image>
                 </View>
                 <View style={styles.bt_c}>
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={this.login}>
                         <View style={styles.bt}>
                             <Text style={styles.bt_text}>手机号登录</Text>
                         </View>
@@ -70,11 +74,11 @@ export default class AppLogin extends Component {
 const styles = StyleSheet.create({
     loginAll: {
         flex: 1,
-        backgroundColor: '#e62310'
+        backgroundColor: '#ee0011'
     },
     head: {
         textAlign: 'right',
-        fontSize: 20,
+        fontSize: 16,
         color: '#fff',
         margin: 10
     },
@@ -89,15 +93,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     bt: {
-        width: width - 150,
-        height: 50,
+        width: width - 120,
+        height: 40,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 25
+        borderRadius: 20
     },
     bt_text: {
-        fontSize: 20,
+        fontSize: 16,
         color: '#e62310'
     },
     ways: {
@@ -128,8 +132,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     gou_k: {
-        height: 22,
-        width: 22,
+        height: 18,
+        width: 18,
         borderRadius: 2,
         borderWidth: 2,
         borderColor: '#fff',
@@ -141,11 +145,11 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     text_a: {
-        fontSize: 15,
-        color: '#eee'
+        fontSize: 12,
+        color: '#bbb'
     },
     text_b: {
-        fontSize: 18,
+        fontSize: 15,
         color: '#fff'
     }
 })

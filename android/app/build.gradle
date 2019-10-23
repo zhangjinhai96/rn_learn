@@ -127,6 +127,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jniLibs']
+        }
+    }
+
     defaultConfig {
         applicationId "com.rn_learn"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -150,6 +156,7 @@ android {
             keyPassword 'android'
         }
     }
+    buildToolsVersion = buildToolsVersion
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -179,9 +186,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.facebook.react:react-native:+'
+    // From node_modules
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
@@ -189,6 +196,16 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation files('libs/open_sdk_r6137_lite.jar')
+    implementation files('libs/umeng-common-2.0.1.jar')
+    implementation files('libs/umeng-share-core-6.9.3.jar')
+    implementation files('libs/umeng-share-QQ-full-6.9.3.jar')
+    implementation files('libs/umeng-share-sina-full-6.9.3.jar')
+    implementation files('libs/umeng-share-wechat-full-6.9.6.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
+    implementation files('libs/umeng-sharetool-6.9.3.jar')
+    implementation files('libs/wechat-sdk-android-without-mta-5.1.4.jar')
+    implementation files('libs/weiboSDKCore.jar')
 }
 
 // Run this once to be able to run the application with BUCK

@@ -1,26 +1,50 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.rn_learn">
+    package="com.rn_learn">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-      android:name=".MainApplication"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
-      android:theme="@style/AppTheme">
-      <activity
-        android:name=".MainActivity"
+        android:name=".MainApplication"
         android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-      </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="false"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".bootpage.BootPageActivity"
+            android:label="@string/app_name"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/BootTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+        <activity android:name=".MainActivity" android:exported="true"/>
+        <activity android:name=".wxapi.WXEntryActivity"/>
+        <!--qq登录-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 这地方需要用你在开放平台申请的appid:tencent+appid -->
+                <data android:scheme="tencent1109957674" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
