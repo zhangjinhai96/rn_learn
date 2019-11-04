@@ -1,4 +1,4 @@
-package com.rn_learn.component;
+package com.rn_learn.component.localgallery;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -15,11 +15,11 @@ public class GalleryModule extends ReactContextBaseJavaModule {
     @NonNull
     @Override
     public String getName() {
-        return "Gallery";
+        return "PFGalleryManager";
     }
 
     @ReactMethod
-    public void getImage(Callback callback){
-        Gallery.getInstance().openGallery(callback);
+    public void getImage(int expectedWidth,int expectedHeight,Callback callback){
+        Gallery.getInstance().openGallery(expectedWidth,expectedHeight,callback);
     }
 }

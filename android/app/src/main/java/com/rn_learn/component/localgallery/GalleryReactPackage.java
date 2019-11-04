@@ -1,4 +1,4 @@
-package com.rn_learn.component;
+package com.rn_learn.component.localgallery;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

@@ -1,4 +1,4 @@
-package com.rn_learn.component;
+package com.rn_learn.component.localgallery;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,14 +12,10 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -28,7 +24,7 @@ public class Gallery {
     private static Gallery instance=null;
     private WeakReference<Activity> mActivity;
     private Callback callback=null;
-    private int height=0,width=0;
+    private int expectedHeight =0, expectedWidth =0;
 
     private Gallery(Activity activity){
         mActivity = new WeakReference<Activity>(activity);
@@ -48,8 +44,8 @@ public class Gallery {
     }
 
     public void openGallery(int width,int height,Callback callback){
-        this.width=width;
-        this.height=height;
+        this.expectedWidth =width;
+        this.expectedHeight =height;
         this.callback = callback;
         openGallery();
     }
@@ -64,29 +60,53 @@ public class Gallery {
         if (resultCode == RESULT_OK && requestCode == 100) {
             if (data != null) {
                 Uri dataPhoto = data.getData();
+
+                //base64编码开始时间
+                long startTime=System.currentTimeMillis();
+
+                //对选择的图片进行base64编码
                 Bitmap bitmap = null;
                 try {
                     bitmap = BitmapFactory.decodeStream(mActivity.get().getContentResolver().openInputStream(dataPhoto));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/4, bitmap.getHeight()/4, true);
+                int scala = calScala(bitmap);
+                bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth()/scala, bitmap.getHeight()/scala, true);
 
                 //String realPath = getImagePath(dataPhoto, null);
+                String strImg=null;
+                try {
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    byte[] bytes = outputStream.toByteArray();
+                    strImg = Base64.encodeToString(bytes, Base64.DEFAULT);
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                byte[] bytes = outputStream.toByteArray();
-                String strImg = Base64.encodeToString(bytes, Base64.DEFAULT);
+                //base64编码开始时间
+                startTime=System.currentTimeMillis()-startTime;
+                Log.i("base64编码耗时",""+startTime);
 
                 callback.invoke("data:image/png;base64,"+strImg);
             }
         }
     }
 
-    private int calScala(int realWidth,int realHeight){
+    private int calScala(Bitmap image){
         int scala=1;
-        return scala;
+        int realWidth=image.getWidth();
+        int realHeight=image.getHeight();
+        if (realWidth > expectedWidth || realHeight > expectedHeight) {
+            realWidth=realWidth/2;
+            realHeight = realHeight / 2;
+            while (realWidth / scala > expectedWidth || realHeight / scala > expectedHeight) {
+                scala*=2;
+            }
+        }
+        return scala/2;
     }
 
     private String getImagePath(Uri uri, String selection){
