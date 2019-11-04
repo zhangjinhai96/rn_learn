@@ -41,10 +41,10 @@ export default class TestGallery extends Component {
     // }
 
     openGallery = () => {
-        Gallery.getImage(150,200,(path) => {
-                //console.log(path)
+        Gallery.getImage(150,200,(img) => {
+                //console.log(img)
                 this.setState({
-                    imgPath: { uri: path }
+                    imgPath: { uri: img }
                 })
             }
         )
