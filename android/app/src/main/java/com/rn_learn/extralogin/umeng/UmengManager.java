@@ -38,19 +38,16 @@ public class UmengManager {
     }
 
     public static void qqLogin(){
-        Log.i("qqLogin", "进入");
         umShareAPI.getPlatformInfo(mActivity, SHARE_MEDIA.QQ, new QQListener());//QQ登录
 
     }
 
     public static void wxLogin(){
-        Log.i("qqLogin", "进入");
         umShareAPI.getPlatformInfo(mActivity, SHARE_MEDIA.WEIXIN, new WXListener());//QQ登录
 
     }
 
     public static void sinaLogin(){
-        Log.i("qqLogin", "进入");
         umShareAPI.getPlatformInfo(mActivity, SHARE_MEDIA.SINA, new SinaListener());//QQ登录
 
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableNativeFeedback ,NativeModules} from 'react-native';
 const device = Dimensions.get('window')
 const width = device.width
-export default class AppLogin extends Component {
+export default class Login extends Component {
 
     constructor(props) {
         super(props)
